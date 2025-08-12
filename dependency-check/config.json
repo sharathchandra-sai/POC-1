@@ -1,0 +1,14 @@
+{
+  "project": "Project-1",
+  "scanPaths": [
+    "src/main/java",
+    "pom.xml"
+  ],
+  "data": {
+    "directory": "./dependency-check-data"
+  },
+  "suppressionFile": "dependency-check/suppressions.xml",
+  "failBuildOnCVSS": 7.0,
+  "format": "HTML",
+  "outputDirectory": "dependency-check-report"
+}
