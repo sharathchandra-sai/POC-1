@@ -1,45 +1,47 @@
 pipeline {
     agent any
+
     stages {
- stage('Checkout') {
+        stage('Checkout') {
             steps {
-                git 'https://github.com/your-repo/HelloWorldApp.git'
+                git 'https://github.com/your-repo/project-1.git'
             }
         }
-        stage('Build') {
+
+        stage('Build & Test') {
             steps {
-                sh 'mvn clean package'
+                sh 'mvn clean install'
             }
         }
-        stage('SonarQube Analysis') {
+
+        stage('Code Quality') {
             steps {
-                withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar'
-                }
+                sh 'mvn sonar:sonar'
             }
         }
-        stage('Dependency Check') {
+
+        stage('Security Scan') {
             steps {
-                sh './dependency-check.sh --project HelloWorldApp --scan .'
+                sh 'dependency-check.sh --project Project-1 --scan src'
             }
         }
-        stage('Docker Build') {
+
+        stage('Docker Build & Push') {
             steps {
-                sh 'docker build -t helloworldapp .'
+                sh 'docker build -t your-dockerhub/project-1 .'
+                sh 'docker push your-dockerhub/project-1'
             }
         }
-        stage('Trivy Scan') {
+
+        stage('Docker Image Scan') {
             steps {
-                sh 'trivy image helloworldapp'
+                sh 'trivy image your-dockerhub/project-1'
             }
         }
-        stage('Docker Push') {
+
+        stage('Deploy') {
             steps {
-                withCredentials([string(credentialsId: 'dockerhub-token', variable: 'DOCKER_TOKEN')]) {
-                    sh 'docker login -u your-username -p $DOCKER_TOKEN'
-                    sh 'docker tag helloworldapp your-username/helloworldapp:latest'
-                    sh 'docker push your-username/helloworldapp:latest'
-                }
+                sh 'docker run -d -p 8080:8080 your-dockerhub/project-1'
             }
         }
     }
