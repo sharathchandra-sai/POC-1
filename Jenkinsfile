@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        SONAR_PROJECT_KEY = 'Sharath'
+        SONAR_HOST_URL = 'http://localhost:9000'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -8,23 +13,25 @@ pipeline {
             }
         }
 
-        stage('Build & Test') {
-            steps {
-                withCredentials([string(credentialsId: 'sonar-token', variable: 'SONAR_TOKEN')]) {
-                    sh 'mvn clean verify sonar:sonar -Dsonar.token=$SONAR_TOKEN'
-                }
-            }
-        }
-
         stage('Code Quality') {
             steps {
-                sh 'mvn sonar:sonar'
+                sh 'mvn clean package'
             }
         }
 
-        stage('Security Scan') {
+        stage('SonarQube Analysis') {
+            environment {
+                SONAR_TOKEN = credentials('Sonar-kodati') // Must exist in Jenkins credentials
+            }
             steps {
-                sh 'dependency-check.sh --project Project-1 --scan src'
+                withSonarQubeEnv('My SonarQube Server') {
+                    sh """
+                        mvn sonar:sonar \
+                          -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
+                          -Dsonar.host.url=${SONAR_HOST_URL} \
+                          -Dsonar.login=${SONAR_TOKEN}
+                    """
+                }
             }
         }
 
