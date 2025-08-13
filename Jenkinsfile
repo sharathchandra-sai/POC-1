@@ -24,7 +24,7 @@ pipeline {
                 SONAR_TOKEN = credentials('Sonar-kodati') // Must exist in Jenkins credentials
             }
             steps {
-                withSonarQubeEnv('My SonarQube Server') {
+                withSonarQubeEnv('SonarQube') {
                     sh """
                         mvn sonar:sonar \
                           -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
