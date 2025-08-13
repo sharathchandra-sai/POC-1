@@ -43,8 +43,8 @@ pipeline {
         
         stage('Docker Build & Push') {
             steps {
-                sh 'docker build -t your-dockerhub/project-1 .'
-                sh 'docker push your-dockerhub/project-1'
+                sh 'docker build -t sharathkodati/project-1 .'
+                sh 'docker push sharathkodati/project-1'
             }
         }
 
