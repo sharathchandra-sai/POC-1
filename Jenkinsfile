@@ -60,7 +60,7 @@ pipeline {
 
         stage('Deploy') {
             steps {
-                sh 'docker run -d -p 8080:8080 your-dockerhub/project-1'
+                sh 'docker run -d -p 8081:8080 sharathkodati/sharathproject-1'
             }
         }
     }
