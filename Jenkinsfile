@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         SONAR_PROJECT_KEY = 'Sharath'
-        SONAR_HOST_URL = 'http://localhost:9000'
+        SONAR_HOST_URL = 'http://3.1.148.127:9000'
     }
 
     stages {
@@ -34,7 +34,13 @@ pipeline {
                 }
             }
         }
-
+        
+        stage('Prepare Artifact') {
+            steps {
+                sh 'cp target/project-1-1.0.0.jar target/project-1.jar'
+            }
+        }
+        
         stage('Docker Build & Push') {
             steps {
                 sh 'docker build -t your-dockerhub/project-1 .'
