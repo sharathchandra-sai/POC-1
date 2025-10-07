@@ -41,14 +41,6 @@ pipeline {
             }
         }
         
-        stage('Docker Image Scan') {
-            steps {
-                sh 'which trivy || echo "Trivy not installed"'
-                sh 'trivy image sharathkodati/sharathproject-1'
-            }
-        }
-
-        
         stage('Docker Build & Push') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'Docker', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
