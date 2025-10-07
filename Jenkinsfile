@@ -21,7 +21,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             environment {
-                SONAR_TOKEN = credentials('Sonar-kodati') // Must exist in Jenkins credentials
+                SONAR_TOKEN = credentials('Sonar') // Must exist in Jenkins credentials
             }
             steps {
                 withSonarQubeEnv('SonarQube') {
