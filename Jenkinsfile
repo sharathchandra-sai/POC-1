@@ -62,6 +62,7 @@ pipeline {
                     trivy image sharathkodati/sharathproject-1 || echo "Trivy scan failed, continuing pipeline"
                 '''
             }
+        }
 
         stage('Deploy') {
             steps {
