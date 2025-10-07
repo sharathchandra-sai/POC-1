@@ -43,7 +43,7 @@ pipeline {
         
         stage('Docker Build & Push') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                withCredentials([usernamePassword(credentialsId: 'Docker', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
                     sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
                     sh 'docker build -t sharathkodati/sharathproject-1 .'
                     sh 'docker push sharathkodati/sharathproject-1'
