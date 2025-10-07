@@ -54,7 +54,7 @@ pipeline {
 
         stage('Docker Image Scan') {
             steps {
-                sh 'trivy image your-dockerhub/project-1'
+                sh 'trivy image sharathkodati/project-1'
             }
         }
 
